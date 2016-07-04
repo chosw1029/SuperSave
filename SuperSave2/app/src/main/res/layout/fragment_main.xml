@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:CircleProgressView="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <com.nextus.supersave.view.CalendarView
+            xmlns:calendarNS="http://schemas.android.com/apk/res/samples.aalamir.customcalendar"
+            android:layout_marginTop="8dp"
+            android:id="@+id/calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floating"
+                    android:src="@drawable/ic_flash"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="8dp"
+                    android:background="#88ffffff"
+                    android:layout_gravity="top|right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <at.grabner.circleprogress.CircleProgressView
+                    android:layout_gravity="center"
+                    android:id="@+id/circleView"
+                    android:layout_width="290dp"
+                    android:layout_height="290dp"
+                    CircleProgressView:cpv_value="0"
+                    CircleProgressView:cpv_maxValue="100"
+                    CircleProgressView:cpv_barColor="@color/colorPrimary"
+                    CircleProgressView:cpv_rimColor="@color/colorPrimaryDark"
+                    CircleProgressView:cpv_textColor="@color/colorPrimary"
+                    CircleProgressView:cpv_unitColor="@color/colorPrimaryDark"
+                    CircleProgressView:cpv_spinColor="@color/colorPrimary"
+                    CircleProgressView:cpv_barWidth="20dp"
+                    CircleProgressView:cpv_rimWidth="20dp"
+                    CircleProgressView:cpv_contourSize="0dp"
+                    CircleProgressView:cpv_seekMode="false"
+                    CircleProgressView:cpv_autoTextSize="true"
+                    CircleProgressView:cpv_unit="원"
+                    CircleProgressView:cpv_blockCount="6"
+                    CircleProgressView:cpv_blockScale="0.99"
+                    android:rotation="180" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="현재 사용량"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/current_money"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="45sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="55,000원"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="323 kWh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:text="목표 금액"
+                android:layout_weight="4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/progress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:gravity="left|center_vertical"
+                        android:textSize="14sp"
+                        android:paddingLeft="10dp"
+                        android:text="0 %"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+
+                    <TextView
+                        android:gravity="right|center_vertical"
+                        android:textSize="14sp"
+                        android:paddingRight="10dp"
+                        android:text="100 %"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+</LinearLayout>

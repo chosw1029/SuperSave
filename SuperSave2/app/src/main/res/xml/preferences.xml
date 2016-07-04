@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="setting"
+    android:title="설정">
+
+        <PreferenceCategory
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:key="setting_1"
+            android:title="개인 정보 설정">
+
+            <ListPreference
+                android:key="list_preference"
+                android:title="주거 형태"
+                android:summary="본인이 거주하고 있는 주거 형태"
+                android:entries="@array/listDisplayWord"
+                android:entryValues="@array/listReturnValue"
+                android:dialogTitle="주거형태 설정"
+                />
+
+            <ListPreference
+                android:key="list_preference_02"
+                android:title="용도 선택"
+                android:summary="저압용 또는 고압용"
+                android:entries="@array/list_function"
+                android:entryValues="@array/list_function"
+                android:dialogTitle="용도 설정"
+                />
+
+            <EditTextPreference
+                android:key="edit_preference"
+                android:title="목표금액 설정"
+                android:summary="숫자만 입력"
+                />
+
+
+
+        </PreferenceCategory>
+
+
+
+</PreferenceScreen>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listDisplayWord">
+        <item>아파트</item>
+        <item>단독주택</item>
+    </string-array>
+    <string-array name="listReturnValue">
+        <item>아파트</item>
+        <item>단독주택</item>
+    </string-array>
+    <string-array name="list_function">
+        <item>저압용</item>
+        <item>고압용</item>
+    </string-array>
+    <string-array name="list_function_value">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+</resources>
