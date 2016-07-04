@@ -1,13 +1,10 @@
 package com.nextus.supersave.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +17,6 @@ import com.google.android.gms.ads.AdView;
 import com.nextus.supersave.Calculator;
 import com.nextus.supersave.view.DeclareView;
 import com.nextus.supersave.R;
-import com.nextus.supersave.fragment.CalendarFragment;
 import com.nextus.supersave.fragment.MainFragment;
 import com.nextus.supersave.lifecycle.CycleControllerActivity;
 
@@ -31,7 +27,6 @@ public class MainActivity extends CycleControllerActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction transaction = fragmentManager.beginTransaction();
     final MainFragment fragment = MainFragment.newInstance("mainfragment");
-    final CalendarFragment fragment3 = new CalendarFragment();
 
     @DeclareView( id = R.id.calendar_date_display )
     TextView txtDate;
