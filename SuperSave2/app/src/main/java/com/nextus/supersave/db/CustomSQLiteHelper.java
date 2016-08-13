@@ -70,6 +70,30 @@ public class CustomSQLiteHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<Integer> monthly_data(int month) {
+        SQLiteDatabase db = getReadableDatabase();
+        String str = "";
+        ArrayList<Integer> list = new ArrayList<Integer>();
+
+        Cursor cursor = db.rawQuery("select * from kwhdata where month="+month, null); // 이번달 데이터 취합
+        while(cursor.moveToNext()) {
+            list.add(cursor.getInt(3));
+
+            str += cursor.getInt(0)
+                    + " : id / "
+                    + cursor.getInt(1)
+                    + " : month / "
+                    + cursor.getInt(2)
+                    + " : date "
+                    + cursor.getInt(3)
+                    + " : kwh "
+                    + "\n";
+        }
+
+        db.close();
+        return list;
+    }
+
     public ArrayList<Integer> findData(int month, int date) {
         SQLiteDatabase db = getReadableDatabase();
         String str = "";

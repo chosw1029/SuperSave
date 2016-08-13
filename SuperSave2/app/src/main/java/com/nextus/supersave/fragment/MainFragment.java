@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nextus.supersave.Calculator;
+import com.nextus.supersave.MyApplication;
 import com.nextus.supersave.db.CustomSQLiteHelper;
 import com.nextus.supersave.view.CalendarView;
 import com.nextus.supersave.R;
@@ -43,6 +44,7 @@ import com.nextus.supersave.view.DeclareView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -56,15 +58,13 @@ import at.grabner.circleprogress.UnitPosition;
 public class MainFragment extends FragmentView implements View.OnClickListener {
     private static final String ARG_TEXT = "ARG_TEXT";
 
-    @DeclareView ( id = R.id.circleView )
-    at.grabner.circleprogress.CircleProgressView circleProgressView;
+    @DeclareView ( id = R.id.circleView ) at.grabner.circleprogress.CircleProgressView circleProgressView;
 
     public CustomSQLiteHelper helper;
     TextView current_money;
-
+    TextView total_kwh;
 
     public MainFragment(){
-
     }
 
     public static MainFragment newInstance(String text) {
@@ -85,6 +85,7 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
         //View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         current_money = (TextView) view.findViewById(R.id.current_money);
+        total_kwh = (TextView) view.findViewById(R.id.total_kwh);
 
         settingCalendar(view);
         settingProgressView(view);
@@ -134,9 +135,11 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
         circleProgressView.setValueAnimated(35.0f);
         circleProgressView.setUnitVisible(false);
         circleProgressView.setTextMode(TextMode.TEXT);
-        circleProgressView.setUnitPosition(UnitPosition.BOTTOM);;
-    }
+        circleProgressView.setUnitPosition(UnitPosition.BOTTOM);
+        circleProgressView.setValue(0);
 
+
+    }
 
     @Override
     public void onClick(View v) {
@@ -152,13 +155,17 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
                 builder.setView(dialog_view);
 
                 String positiveText = getString(android.R.string.ok);
+
                 builder.setPositiveButton(positiveText,
                         new DialogInterface.OnClickListener() {
+
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // positive button logic
                                 EditText editText = (EditText) dialog_view.findViewById(R.id.edit_text);
+
                                 int kwh = Integer.parseInt(editText.getText().toString());
+
                                 // today
                                 Date today = new Date();
 
@@ -166,11 +173,12 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
                                 int date = today.getDate();
 
                                 String insert_query = "insert into kwhdata values(null, "+month+", "+date+", "+kwh+");";
-
                                 helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
                                 //helper.drop();
                                 helper.insert(insert_query);
-                                Log.d("data_print", ""+helper.printData());
+
+
+                                updateData();
 
                             }
                         });
@@ -184,6 +192,7 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
                                 //   mBottomBar.selectTabAtPosition(before_position, true);
                             }
                         });
+
                 // display dialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
@@ -191,15 +200,32 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
         }
     }
 
+    public void updateData()
+    {
+        Date today = new Date();
+        int month = today.getMonth()+1;
+
+        ArrayList<Integer> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
+        if(monthly_sum.size() > 0)
+        {
+            int first_data = monthly_sum.get(0);
+            int last_data = monthly_sum.get(monthly_sum.size()-1);
+            int subtraction = last_data - first_data;
+            MyApplication.mInstance.setTotal_kwh(subtraction);
+        }
+        else
+            MyApplication.mInstance.setTotal_kwh(0);
+
+        Calculator.getInstance().setData(MyApplication.mInstance.getTotal_kwh(), getContext());
+        current_money.setText(""+ Calculator.getInstance().getTotal_money()+" 원");
+        total_kwh.setText(""+ MyApplication.mInstance.getTotal_kwh()+" kWH");
+    }
+
     @Override
     public void onResume()
     {
         super.onResume();
-        Log.e("MainFragment", "Resume");
-        current_money.setText(""+ Calculator.getInstance().getTotal_money());
+        updateData();
+
     }
-
-
-
-
 }

@@ -15,12 +15,15 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.nextus.supersave.Calculator;
+import com.nextus.supersave.MyApplication;
 import com.nextus.supersave.view.DeclareView;
 import com.nextus.supersave.R;
 import com.nextus.supersave.fragment.MainFragment;
 import com.nextus.supersave.lifecycle.CycleControllerActivity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends CycleControllerActivity {
 
@@ -28,14 +31,9 @@ public class MainActivity extends CycleControllerActivity {
     final FragmentTransaction transaction = fragmentManager.beginTransaction();
     final MainFragment fragment = MainFragment.newInstance("mainfragment");
 
-    @DeclareView( id = R.id.calendar_date_display )
-    TextView txtDate;
-
-    @DeclareView ( id = R.id.calendar_prev_button )
-    ImageView calendar;
-
-    @DeclareView ( id = R.id.adView )
-    AdView adView;
+    @DeclareView( id = R.id.calendar_date_display ) TextView txtDate;
+    @DeclareView ( id = R.id.calendar_prev_button ) ImageView calendar;
+    @DeclareView ( id = R.id.adView ) AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +67,39 @@ public class MainActivity extends CycleControllerActivity {
 
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        updateData();
+
+    }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        updateData();
+    }
+
+    public void updateData()
+    {
+        Date today = new Date();
+        int month = today.getMonth()+1;
+
+        ArrayList<Integer> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
+        if(monthly_sum.size() > 0)
+        {
+            int first_data = monthly_sum.get(0);
+            int last_data = monthly_sum.get(monthly_sum.size()-1);
+            int subtraction = last_data - first_data;
+            MyApplication.mInstance.setTotal_kwh(subtraction);
+        }
+        else
+            MyApplication.mInstance.setTotal_kwh(0);
+
+        Log.d("data_print", ""+MyApplication.mInstance.getTotal_kwh());
+    }
 
 
 

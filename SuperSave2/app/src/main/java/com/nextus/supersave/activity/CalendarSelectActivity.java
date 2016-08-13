@@ -1,6 +1,7 @@
 package com.nextus.supersave.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.nextus.supersave.MyApplication;
 import com.nextus.supersave.db.CustomSQLiteHelper;
 import com.nextus.supersave.view.CalendarViewAll;
 import com.nextus.supersave.view.DeclareView;
@@ -16,6 +18,7 @@ import com.nextus.supersave.lifecycle.CycleControllerActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -51,13 +54,16 @@ public class CalendarSelectActivity extends CycleControllerActivity {
         cv.setEventHandler(new CalendarViewAll.EventHandler() {
             @Override
             public void onDayLongPress(Date date) {
+
+                Date today = new Date();
+                int month = today.getMonth()+1;
+
                 // show returned day
                 DateFormat df = SimpleDateFormat.getDateInstance();
                 Toast.makeText(getApplicationContext(), df.format(date), Toast.LENGTH_SHORT).show();
+
             }
         });
-
-
     }
 
     @Override

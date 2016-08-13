@@ -80,7 +80,7 @@ public class Calculator {
 
     }
 
-    public double getTotal_money()
+    public int getTotal_money()
     {
         return total_money;
     }
