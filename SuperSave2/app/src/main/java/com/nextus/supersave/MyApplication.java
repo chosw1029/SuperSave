@@ -11,7 +11,7 @@ public class MyApplication extends Application {
 
     public static MyApplication mInstance;
     private static CustomSQLiteHelper helper;
-    public int total_kwh = 0;
+    public float total_kwh = 0;
 
     @Override
     public void onCreate() {
@@ -25,12 +25,12 @@ public class MyApplication extends Application {
         return helper;
     }
 
-    public int getTotal_kwh()
+    public float getTotal_kwh()
     {
         return total_kwh;
     }
 
-    public void setTotal_kwh(int kwh)
+    public void setTotal_kwh(float kwh)
     {
         total_kwh = kwh;
     }

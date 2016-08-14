@@ -11,12 +11,10 @@
         android:background="#ECEFF1"
         android:layout_marginBottom="50dp"
         android:id="@+id/activity_main">
-
         <!-- date toolbar -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="40dp">
-
             <ImageView
                 android:id="@+id/calendar_prev_button"
                 android:layout_marginLeft="10dp"
@@ -44,9 +42,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"
                 android:src="@drawable/ic_info_outline_24dp"/>
-
-
-
             <!-- next button -->
         </FrameLayout>
 

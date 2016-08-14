@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".activity.MainActivityTemp"
             android:launchMode="singleInstance">
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
@@ -25,11 +25,14 @@
 
 
         <activity android:name=".activity.CalendarSelectActivity"
-            android:parentActivityName=".activity.MainActivity"></activity>
+            android:parentActivityName=".activity.MainActivity">
+
+        </activity>
 
         <activity android:name=".activity.SettingActivity"
-            android:theme="@style/Base.V7.Theme.AppCompat.Dialog"
-            android:parentActivityName=".activity.MainActivity"></activity>
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog">
+
+        </activity>
 
         <activity android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"

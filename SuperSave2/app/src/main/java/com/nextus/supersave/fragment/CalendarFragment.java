@@ -45,7 +45,6 @@ public class CalendarFragment extends Fragment {
     CalendarView calendarView;
 
     public CalendarFragment() {
-
     }
 
     public static CalendarFragment newInstance(String text) {

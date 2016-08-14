@@ -24,14 +24,11 @@ import java.util.Date;
 
 public class CalendarSelectActivity extends CycleControllerActivity {
 
-    @DeclareView ( id = R.id.calendar_date_display )
-    TextView txtDate;
+    @DeclareView ( id = R.id.calendar_date_display )TextView txtDate;
 
+   ImageView calendar;
 
-    ImageView calendar;
-
-    @DeclareView ( id = R.id.calendar_view_01 )
-    CalendarViewAll cv;
+    @DeclareView ( id = R.id.calendar_view_01 ) CalendarViewAll cv;
 
 
     public int before_position = 0;
@@ -42,10 +39,7 @@ public class CalendarSelectActivity extends CycleControllerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar_fragment, true);
-
-
         setTitle("기록");
-
 
       //  cv = (CalendarViewAll) findViewById(R.id.calendar_view_01);
         cv.updateCalendar();

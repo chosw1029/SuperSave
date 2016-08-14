@@ -1,6 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:CircleProgressView="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ECEFF1"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/activity_main">
+        <!-- date toolbar -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <ImageView
+                android:id="@+id/calendar_prev_button"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:src="@drawable/ic_event_note_24dp"/>
+
+            <!-- date title -->
+            <TextView
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="left|center_vertical"
+                android:id="@+id/calendar_date_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:textColor="#222222"
+                android:text="current date"/>
+
+            <ImageView
+                android:id="@+id/info"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/ic_info_outline_24dp"/>
+            <!-- next button -->
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#000000"/>
+
+        <com.nextus.supersave.view.CalendarView
+            xmlns:calendarNS="http://schemas.android.com/apk/res/samples.aalamir.customcalendar"
+            android:layout_marginTop="8dp"
+            android:id="@+id/calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floating"
+                    android:src="@drawable/ic_flash"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="8dp"
+                    android:background="#88ffffff"
+                    android:layout_gravity="top|right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <at.grabner.circleprogress.CircleProgressView
+                    android:layout_gravity="center"
+                    android:id="@+id/circleView"
+                    android:layout_width="290dp"
+                    android:layout_height="290dp"
+                    CircleProgressView:cpv_value="0"
+                    CircleProgressView:cpv_maxValue="100"
+                    CircleProgressView:cpv_barColor="@color/colorPrimary"
+                    CircleProgressView:cpv_rimColor="@color/colorPrimaryDark"
+                    CircleProgressView:cpv_textColor="@color/colorPrimary"
+                    CircleProgressView:cpv_unitColor="@color/colorPrimaryDark"
+                    CircleProgressView:cpv_spinColor="@color/colorPrimary"
+                    CircleProgressView:cpv_barWidth="20dp"
+                    CircleProgressView:cpv_rimWidth="20dp"
+                    CircleProgressView:cpv_contourSize="0dp"
+                    CircleProgressView:cpv_seekMode="false"
+                    CircleProgressView:cpv_autoTextSize="true"
+                    CircleProgressView:cpv_blockCount="6"
+                    CircleProgressView:cpv_blockScale="0.99"
+                    CircleProgressView:cpv_showUnit="false"
+                    CircleProgressView:cpv_textMode="Text"
+                    android:rotation="180" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="현재 사용량"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/current_money"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="45sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="55,000원"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/total_kwh"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="323 kWh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/goal"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:paddingLeft="10dp"
+                android:text="목표 금액"
+                android:layout_weight="4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:max="100"
+                    android:id="@+id/progress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-4149992927097425/4116112999"
+        android:layout_gravity="bottom"
+        />
+
+
+</FrameLayout>

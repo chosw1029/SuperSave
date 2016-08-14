@@ -70,22 +70,22 @@ public class CustomSQLiteHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<Integer> monthly_data(int month) {
+    public ArrayList<Float> monthly_data(int month) {
         SQLiteDatabase db = getReadableDatabase();
         String str = "";
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Float> list = new ArrayList<>();
 
         Cursor cursor = db.rawQuery("select * from kwhdata where month="+month, null); // 이번달 데이터 취합
         while(cursor.moveToNext()) {
-            list.add(cursor.getInt(3));
+            list.add(cursor.getFloat(3));
 
-            str += cursor.getInt(0)
+            str += cursor.getFloat(0)
                     + " : id / "
-                    + cursor.getInt(1)
+                    + cursor.getFloat(1)
                     + " : month / "
-                    + cursor.getInt(2)
+                    + cursor.getFloat(2)
                     + " : date "
-                    + cursor.getInt(3)
+                    + cursor.getFloat(3)
                     + " : kwh "
                     + "\n";
         }
@@ -94,22 +94,22 @@ public class CustomSQLiteHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public ArrayList<Integer> findData(int month, int date) {
+    public ArrayList<Float> findData(int month, int date) {
         SQLiteDatabase db = getReadableDatabase();
         String str = "";
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Float> list = new ArrayList<>();
 
         Cursor cursor = db.rawQuery("select * from kwhdata where month="+month+" and date="+date, null);
         while(cursor.moveToNext()) {
-            list.add(cursor.getInt(3));
+            list.add(cursor.getFloat(3));
 
-            str += cursor.getInt(0)
+            str += cursor.getFloat(0)
                     + " : id / "
-                    + cursor.getInt(1)
+                    + cursor.getFloat(1)
                     + " : month / "
-                    + cursor.getInt(2)
+                    + cursor.getFloat(2)
                     + " : date "
-                    + cursor.getInt(3)
+                    + cursor.getFloat(3)
                     + " : kwh "
                     + "\n";
 

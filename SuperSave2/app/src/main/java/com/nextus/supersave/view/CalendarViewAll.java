@@ -170,7 +170,7 @@ public class CalendarViewAll extends LinearLayout {
                 int month = ((Date) view.getItemAtPosition(position)).getMonth()+1;
                 int date = ((Date) view.getItemAtPosition(position)).getDate();
 
-                dialog(month, date);
+                dialog(view, month, date, position);
 
                // helper  = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
                // Log.d("FindData", ""+helper.findData(6,27));
@@ -182,27 +182,36 @@ public class CalendarViewAll extends LinearLayout {
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                int month = ((Date) parent.getItemAtPosition(position)).getMonth()+1;
-                int date = ((Date) parent.getItemAtPosition(position)).getDate();
-
-                helper  = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
-                ArrayList<Integer> temp_list = helper.findData(month, date);
-
-                mAdapter = new ListViewAdapter(getContext());
-                listView.setAdapter(mAdapter);
-
-                for(int i=0; i<temp_list.size(); i++)
-                {
-                    String temp = ""+month+"월 "+date+"일 "+temp_list.get(i)+"kWh 를 입력하였습니다.";
-                    mAdapter.addItem(temp);
-                }
-
+               showSavedData(parent, position);
             }
         });
     }
 
-    public void dialog(int m, int d)
+    public void showSavedData(AdapterView<?> parent, int position)
+    {
+        int month = ((Date) parent.getItemAtPosition(position)).getMonth()+1;
+        int date = ((Date) parent.getItemAtPosition(position)).getDate();
+
+        helper  = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
+        ArrayList<Float> temp_list = helper.findData(month, date);
+
+        mAdapter = new ListViewAdapter(getContext());
+
+        for(int i=0; i<temp_list.size(); i++)
+        {
+            String temp = ""+month+"월 "+date+"일 "+temp_list.get(i)+"kWh 를 입력하였습니다.";
+            mAdapter.addItem(temp);
+        }
+        listView.setAdapter(mAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.e("ListViewItem", ""+i);
+            }
+        });
+    }
+
+    public void dialog(final AdapterView<?> view, int m, int d, final int position)
     {
         LayoutInflater inflater = LayoutInflater.from(getContext());
 
@@ -221,13 +230,16 @@ public class CalendarViewAll extends LinearLayout {
                     public void onClick(DialogInterface dialog, int which) {
                         // positive button logic
                         EditText editText = (EditText) dialog_view.findViewById(R.id.edit_text);
-                        int kwh = Integer.parseInt(editText.getText().toString());
+                        float kwh = Float.parseFloat(editText.getText().toString());
+                        //int kwh = Integer.parseInt(editText.getText().toString());
 
                         String insert_query = "insert into kwhdata values(null, "+month+", "+date+", "+kwh+");";
 
                         helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
                         //helper.drop();
                         helper.insert(insert_query);
+                        showSavedData(view, position);
+
                         //Log.d("data_print", ""+helper.printData());
 
                     }

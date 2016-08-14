@@ -1,6 +1,7 @@
 package com.nextus.supersave;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,11 @@ public class ListViewAdapter extends BaseAdapter {
         }
 
         holder.text.setText(""+mList.get(position).getContent());
+
+        if(position%2 == 0)
+        {
+            convertView.setBackgroundColor(Color.rgb(240,255,255));
+        }
 
         return convertView;
     }

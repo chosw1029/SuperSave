@@ -43,6 +43,7 @@ import com.nextus.supersave.R;
 import com.nextus.supersave.view.DeclareView;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -132,6 +133,7 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
         animation.start();
 
         circleProgressView = (CircleProgressView)view.findViewById(R.id.circleView);
+
         circleProgressView.setValueAnimated(35.0f);
         circleProgressView.setUnitVisible(false);
         circleProgressView.setTextMode(TextMode.TEXT);
@@ -164,13 +166,13 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
                                 // positive button logic
                                 EditText editText = (EditText) dialog_view.findViewById(R.id.edit_text);
 
-                                int kwh = Integer.parseInt(editText.getText().toString());
+                                float kwh = Float.parseFloat(editText.getText().toString());
 
                                 // today
                                 Date today = new Date();
 
-                                int month = today.getMonth()+1;
-                                int date = today.getDate();
+                                float month = today.getMonth()+1;
+                                float date = today.getDate();
 
                                 String insert_query = "insert into kwhdata values(null, "+month+", "+date+", "+kwh+");";
                                 helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
@@ -205,12 +207,12 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
         Date today = new Date();
         int month = today.getMonth()+1;
 
-        ArrayList<Integer> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
+        ArrayList<Float> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
         if(monthly_sum.size() > 0)
         {
-            int first_data = monthly_sum.get(0);
-            int last_data = monthly_sum.get(monthly_sum.size()-1);
-            int subtraction = last_data - first_data;
+            float first_data = monthly_sum.get(0);
+            float last_data = monthly_sum.get(monthly_sum.size()-1);
+            float subtraction = last_data - first_data;
             MyApplication.mInstance.setTotal_kwh(subtraction);
         }
         else
@@ -218,7 +220,15 @@ public class MainFragment extends FragmentView implements View.OnClickListener {
 
         Calculator.getInstance().setData(MyApplication.mInstance.getTotal_kwh(), getContext());
         current_money.setText(""+ Calculator.getInstance().getTotal_money()+" 원");
-        total_kwh.setText(""+ MyApplication.mInstance.getTotal_kwh()+" kWH");
+
+        //String total = String.format("%1.f", MyApplication.mInstance.getTotal_kwh());
+
+        DecimalFormat format = new DecimalFormat(".##");
+        String total = format.format(MyApplication.mInstance.getTotal_kwh());
+
+        total_kwh.setText(total+" kWH");
+
+        circleProgressView.setValueAnimated(MyApplication.mInstance.getTotal_kwh()/6);
     }
 
     @Override

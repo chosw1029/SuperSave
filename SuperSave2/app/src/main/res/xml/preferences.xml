@@ -31,9 +31,6 @@
                 android:title="목표금액 설정"
                 android:summary="숫자만 입력"
                 />
-
-
-
         </PreferenceCategory>
 
 

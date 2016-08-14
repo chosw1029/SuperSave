@@ -87,12 +87,12 @@ public class MainActivity extends CycleControllerActivity {
         Date today = new Date();
         int month = today.getMonth()+1;
 
-        ArrayList<Integer> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
+        ArrayList<Float> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
         if(monthly_sum.size() > 0)
         {
-            int first_data = monthly_sum.get(0);
-            int last_data = monthly_sum.get(monthly_sum.size()-1);
-            int subtraction = last_data - first_data;
+            float first_data = monthly_sum.get(0);
+            float last_data = monthly_sum.get(monthly_sum.size()-1);
+            float subtraction = last_data - first_data;
             MyApplication.mInstance.setTotal_kwh(subtraction);
         }
         else

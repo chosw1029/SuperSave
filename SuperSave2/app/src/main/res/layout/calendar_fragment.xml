@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <com.nextus.supersave.view.CalendarViewAll
                 xmlns:calendarNS="http://schemas.android.com/apk/res/samples.aalamir.customcalendar"
                 android:layout_marginTop="8dp"
@@ -16,11 +14,5 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="10dp" >
             </com.nextus.supersave.view.CalendarViewAll>
-
         </LinearLayout>
-
-
-
-
-
 </LinearLayout>

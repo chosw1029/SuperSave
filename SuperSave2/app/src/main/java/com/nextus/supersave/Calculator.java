@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class Calculator {
 
-    private int kWH = 0;
+    private float kWH = 0;
     private Context context;
     private int level = 0;
     private int[] level_basic_money = {410, 910, 1600, 3850, 7300, 12940};
@@ -26,7 +26,7 @@ public class Calculator {
         return calculator;
     }
 
-    public void setData(int kWH, Context mContext)
+    public void setData(float kWH, Context mContext)
     {
         this.kWH = kWH;
         context = mContext;
@@ -43,7 +43,7 @@ public class Calculator {
 
     }
 
-    private void level_setting(int kWH)
+    private void level_setting(float kWH)
     {
         if( kWH <= 100 ) level = 0;
         else if ( kWH > 100 && kWH <= 200 ) level = 1;
