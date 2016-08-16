@@ -38,7 +38,11 @@ public class CustomSQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    void delete() {
+    public void delete(int month, int date, float kwh) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "delete from kwhdata where month="+month+" and date="+date+" and kwh="+kwh;
+        db.execSQL(query);
+        db.close();
     }
 
     public ArrayList<ListStructure> getData() {

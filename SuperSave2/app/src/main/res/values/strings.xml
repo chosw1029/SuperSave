@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="banner_ad_unit_id">ca-app-pub-4149992927097425~4255713793</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3193127825195988/7384287158</string>
+    <string name="app_name">포켓 전기세 알리미</string>
 
 </resources>

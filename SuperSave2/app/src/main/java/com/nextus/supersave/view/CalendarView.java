@@ -226,8 +226,8 @@ public class CalendarView extends LinearLayout {
             }
 
             // clear styling
-            ((TextView)view.findViewById(R.id.calendar_day_text)).setTextSize(20.0f);
-            ((TextView)view.findViewById(R.id.calendar_day_text)).setTypeface(null, Typeface.NORMAL);
+            //((TextView)view.findViewById(R.id.calendar_day_text)).setTextSize(20.0f);
+            //((TextView)view.findViewById(R.id.calendar_day_text)).setTypeface(null, Typeface.NORMAL);
             ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(Color.BLACK);
             ((TextView)view.findViewById(R.id.calendar_day_text)).setGravity(Gravity.TOP);
 
@@ -249,7 +249,7 @@ public class CalendarView extends LinearLayout {
             }
             else if (position == 6)
             {
-                ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(getResources().getColor(R.color.today));
+                ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(getResources().getColor(R.color.saturday));
             }
 
             // set text

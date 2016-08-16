@@ -18,7 +18,9 @@ public class MyApplication extends Application {
         super.onCreate();
         mInstance = this;
         helper = new CustomSQLiteHelper( this, "ELECTRO_DATA.db", null, 1);
+
     }
+
 
     public CustomSQLiteHelper getHelper()
     {

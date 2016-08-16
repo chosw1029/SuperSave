@@ -21,6 +21,7 @@ public class CycleControllerActivity extends AppCompatActivity {
 		super.onCreate(arg0);
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
 	}
+
 	
 	public void setContentView(int layoutResID,boolean isViewMap) {
 		if (isViewMap == true) {

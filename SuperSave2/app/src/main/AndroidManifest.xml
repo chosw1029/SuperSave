@@ -9,7 +9,7 @@
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="supersave"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -25,7 +25,7 @@
 
 
         <activity android:name=".activity.CalendarSelectActivity"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.MainActivityTemp">
 
         </activity>
 

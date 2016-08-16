@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:CircleProgressView="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -15,18 +16,26 @@
         <!-- date toolbar -->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="45dp">
             <ImageView
                 android:id="@+id/calendar_prev_button"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|center_vertical"
-                android:src="@drawable/ic_event_note_24dp"/>
-
+                android:src="@drawable/ic_event_note_black_24dp"/>
             <!-- date title -->
+
+            <ImageView
+                android:id="@+id/info"
+                android:layout_marginRight="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/ic_info_outline_24dp"/>
+
             <TextView
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="60dp"
                 android:layout_gravity="left|center_vertical"
                 android:id="@+id/calendar_date_display"
                 android:layout_width="wrap_content"
@@ -34,53 +43,44 @@
                 android:gravity="center"
                 android:textAppearance="@android:style/TextAppearance.Medium"
                 android:textColor="#222222"
-                android:text="current date"/>
-
-            <ImageView
-                android:id="@+id/info"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:src="@drawable/ic_info_outline_24dp"/>
+                android:textStyle="bold"
+                android:text="current date"
+                android:textSize="20dp" />
             <!-- next button -->
         </FrameLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000"/>
-
+        
         <com.nextus.supersave.view.CalendarView
-            xmlns:calendarNS="http://schemas.android.com/apk/res/samples.aalamir.customcalendar"
-            android:layout_marginTop="8dp"
             android:id="@+id/calendar_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="55dp"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:weightSum="1">
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="0dp"
+                android:layout_weight="0.75">
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/floating"
                     android:src="@drawable/ic_flash"
                     android:scaleType="fitXY"
                     android:layout_marginRight="8dp"
                     android:background="#88ffffff"
-                    android:layout_gravity="top|right"
+                    android:layout_gravity="bottom|right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-
                 <at.grabner.circleprogress.CircleProgressView
                     android:layout_gravity="center"
                     android:id="@+id/circleView"
-                    android:layout_width="290dp"
-                    android:layout_height="290dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     CircleProgressView:cpv_value="0"
                     CircleProgressView:cpv_maxValue="100"
                     CircleProgressView:cpv_barColor="@color/colorPrimary"
@@ -98,7 +98,6 @@
                     CircleProgressView:cpv_showUnit="false"
                     CircleProgressView:cpv_textMode="Text"
                     android:rotation="180" />
-
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_gravity="center"
@@ -108,7 +107,7 @@
                     <TextView
                         android:textColor="#000000"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="현재 사용량"
@@ -121,7 +120,7 @@
                         android:layout_marginBottom="5dp"
                         android:textColor="#000000"
                         android:textStyle="bold"
-                        android:textSize="45sp"
+                        android:textSize="45dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="55,000원"
@@ -132,7 +131,7 @@
                         android:id="@+id/total_kwh"
                         android:textColor="#000000"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="323 kWh"
@@ -141,37 +140,32 @@
                 </LinearLayout>
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/goal"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:paddingLeft="10dp"
-                android:text="목표 금액"
-                android:layout_weight="4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-
             <LinearLayout
                 android:layout_gravity="bottom"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="0dp"
+                android:layout_weight="0.25">
                 <ProgressBar
+                    android:layout_marginTop="40dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"
                     android:max="100"
                     android:id="@+id/progress"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_alignParentTop="true"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    />
+                    android:layout_gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/goal"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:textSize="13dp"
+                    android:text="목표 금액"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -184,7 +178,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="SMART_BANNER"
-        ads:adUnitId="ca-app-pub-4149992927097425/4116112999"
+        ads:adUnitId="@string/banner_ad_unit_id"
         android:layout_gravity="bottom"
         />
 

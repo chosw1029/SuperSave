@@ -68,14 +68,4 @@ public class CalendarSelectActivity extends CycleControllerActivity {
     }
 
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
 }

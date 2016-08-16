@@ -187,13 +187,13 @@ public class CalendarViewAll extends LinearLayout {
         });
     }
 
-    public void showSavedData(AdapterView<?> parent, int position)
+    public void showSavedData(final AdapterView<?> parent, int position)
     {
-        int month = ((Date) parent.getItemAtPosition(position)).getMonth()+1;
-        int date = ((Date) parent.getItemAtPosition(position)).getDate();
+        final int month = ((Date) parent.getItemAtPosition(position)).getMonth()+1;
+        final int date = ((Date) parent.getItemAtPosition(position)).getDate();
 
         helper  = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
-        ArrayList<Float> temp_list = helper.findData(month, date);
+        final ArrayList<Float> temp_list = helper.findData(month, date);
 
         mAdapter = new ListViewAdapter(getContext());
 
@@ -202,13 +202,58 @@ public class CalendarViewAll extends LinearLayout {
             String temp = ""+month+"월 "+date+"일 "+temp_list.get(i)+"kWh 를 입력하였습니다.";
             mAdapter.addItem(temp);
         }
+
+        final String dialog = ""+month+"월 "+date+"일 ";
+
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("ListViewItem", ""+i);
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Log.e("ListViewItem", ""+position);
+
+                makeDialog(parent, position, dialog, temp_list.get(position), month, date);
+
             }
         });
+    }
+
+    public void updateList(int month, int date)
+    {
+        helper  = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
+        final ArrayList<Float> temp_list = helper.findData(month, date);
+
+        mAdapter = new ListViewAdapter(getContext());
+
+        for(int i=0; i<temp_list.size(); i++)
+        {
+            String temp = ""+month+"월 "+date+"일 "+temp_list.get(i)+"kWh 를 입력하였습니다.";
+            mAdapter.addItem(temp);
+        }
+
+        listView.setAdapter(mAdapter);
+    }
+
+    public void makeDialog(final AdapterView<?> adapterView, final int position, String dialog, final float kwh, final int month, final int date)
+    {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+
+                alertDialog.setTitle(dialog+ " "+kwh+"kWH 데이터를 삭제하겠습니까?")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
+                        helper.delete(month, date, kwh);
+                        updateList(month, date);
+                        //mAdapter.notifyDataSetChanged();
+
+                    }
+                })
+                .setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create().show();
     }
 
     public void dialog(final AdapterView<?> view, int m, int d, final int position)
@@ -352,8 +397,8 @@ public class CalendarViewAll extends LinearLayout {
             }
 
             // clear styling
-            ((TextView)view.findViewById(R.id.calendar_day_text)).setTextSize(30.0f);
-            ((TextView)view.findViewById(R.id.calendar_day_text)).setTypeface(null, Typeface.NORMAL);
+            //((TextView)view.findViewById(R.id.calendar_day_text)).setTextSize(30.0f);
+            //((TextView)view.findViewById(R.id.calendar_day_text)).setTypeface(null, Typeface.NORMAL);
             ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(Color.BLACK);
             ((TextView)view.findViewById(R.id.calendar_day_text)).setGravity(Gravity.TOP);
 

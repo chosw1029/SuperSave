@@ -14,7 +14,7 @@
             android:id="@+id/info_text"
             android:gravity="center_vertical"
             android:text="2016년 6월 28일 2009 kWh 입력하였습니다."
-            android:textSize="18sp"
+            android:textSize="16dp"
             android:layout_weight="6"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />

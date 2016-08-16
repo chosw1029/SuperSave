@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,24 +52,15 @@ import at.grabner.circleprogress.UnitPosition;
 
 public class MainActivityTemp extends CycleControllerActivity implements View.OnClickListener {
 
-    @DeclareView(id = R.id.current_money)
-    TextView current_money;
-    @DeclareView(id = R.id.total_kwh)
-    TextView total_kwh;
-    @DeclareView(id = R.id.floating, click = "this")
-    FloatingActionButton floatingactionButton;
-    @DeclareView(id = R.id.calendar_date_display)
-    TextView txtDate;
-    @DeclareView(id = R.id.goal)
-    TextView goal_text;
-    @DeclareView(id = R.id.calendar_prev_button)
-    ImageView calendar;
-    @DeclareView(id = R.id.adView)
-    AdView adView;
-    @DeclareView(id = R.id.progress)
-    ProgressBar mProgress;
-    @DeclareView(id = R.id.circleView)
-    at.grabner.circleprogress.CircleProgressView circleProgressView;
+    @DeclareView(id = R.id.current_money)TextView current_money;
+    @DeclareView(id = R.id.total_kwh)TextView total_kwh;
+    @DeclareView(id = R.id.floating, click = "this")FloatingActionButton floatingactionButton;
+    @DeclareView(id = R.id.calendar_date_display)TextView txtDate;
+    @DeclareView(id = R.id.goal)TextView goal_text;
+    @DeclareView(id = R.id.calendar_prev_button)ImageView calendar;
+    @DeclareView(id = R.id.adView)AdView adView;
+    @DeclareView(id = R.id.progress)ProgressBar mProgress;
+    @DeclareView(id = R.id.circleView)at.grabner.circleprogress.CircleProgressView circleProgressView;
 
     Calendar today = Calendar.getInstance();
 
@@ -92,7 +84,7 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
 
         Log.e("Goal", "" + sharedPref.getString("edit_preference", "empty"));
 
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("D57D640014965742449F9CCD4947F924").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
 
@@ -125,8 +117,8 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
 
     public void setCalendar() {
         // update title
-        txtDate.setText("" + (today.get(Calendar.MONTH) + 1) + "월");
-        txtDate.setTextSize(25);
+        txtDate.setText("" + (today.get(Calendar.MONTH) + 1) + "월 " + today.get(Calendar.DATE)+"일");
+        //txtDate.setTextSize(2);
 
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,6 +188,8 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
         String total = format.format(MyApplication.mInstance.getTotal_kwh());
 
         total_kwh.setText(total + " kWH");
+
+        //if()
 
         circleProgressView.setValueAnimated(MyApplication.mInstance.getTotal_kwh() / 6);
 

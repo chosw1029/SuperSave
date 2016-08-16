@@ -31,7 +31,7 @@ public class Calculator {
         this.kWH = kWH;
         context = mContext;
 
-        level_setting(kWH);
+        level_setting_new(kWH);
         calculatig_money();
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -51,6 +51,17 @@ public class Calculator {
         else if ( kWH > 300 && kWH <= 400 ) level = 3;
         else if ( kWH > 400 && kWH <= 500 ) level = 4;
         else if ( kWH > 500) level = 5;
+    }
+
+    private void level_setting_new(float kWH)
+    {
+        if( kWH <= 150 ) level = 0;
+        else if ( kWH > 150 && kWH <= 250 ) level = 1;
+        else if ( kWH > 250 && kWH <= 350 ) level = 2;
+        else if ( kWH > 350 && kWH <= 450 ) level = 3;
+        else if ( kWH > 450 && kWH <= 550 ) level = 4;
+        else if ( kWH > 550 && kWH <= 650 ) level = 5;
+        else if ( kWH > 650 ) level = 6;
     }
 
     private void calculatig_money()

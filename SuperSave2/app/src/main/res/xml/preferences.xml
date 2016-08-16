@@ -28,6 +28,8 @@
 
             <EditTextPreference
                 android:key="edit_preference"
+                android:digits="0123456789."
+                android:inputType="numberDecimal"
                 android:title="목표금액 설정"
                 android:summary="숫자만 입력"
                 />
