@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#212121</color>
-    <color name="colorPrimaryDark">#80000000</color>
+    <color name="colorPrimary">#FFF100</color>
+    <color name="colorPrimaryDark">#FDD835</color>
     <color name="colorAccent">#ff3366</color>
     <color name="summer">#C5E1A5</color>
     <color name="fall">#C5E1A5</color>

@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
     >
 
     <TextView
         android:id="@+id/calendar_day_text"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
         android:text="00"
-        android:textSize="15dp"/>
+        android:textSize="21dp"/>
+
+    <ImageView
+        android:id="@+id/bulb_image"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
 
 
-</LinearLayout>
+</FrameLayout>
 

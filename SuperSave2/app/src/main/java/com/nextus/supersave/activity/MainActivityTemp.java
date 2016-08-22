@@ -14,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.percent.PercentFrameLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
@@ -62,9 +63,9 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
     @DeclareView(id = R.id.current_money)TextView current_money;
     @DeclareView(id = R.id.total_kwh)TextView total_kwh;
     @DeclareView(id = R.id.floating, click = "this")FloatingActionButton floatingactionButton;
-    @DeclareView(id = R.id.calendar_date_display)TextView txtDate;
+    //@DeclareView(id = R.id.calendar_date_display)TextView txtDate;
     @DeclareView(id = R.id.goal)TextView goal_text;
-    @DeclareView(id = R.id.calendar_prev_button)ImageView calendar;
+    //@DeclareView(id = R.id.calendar_prev_button)ImageView calendar;
     @DeclareView(id = R.id.adView)AdView adView;
     @DeclareView(id = R.id.progress)ProgressBar mProgress;
     @DeclareView(id = R.id.circleView)at.grabner.circleprogress.CircleProgressView circleProgressView;
@@ -83,28 +84,24 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_temp, true);
-
-        int width = mProgress.getWidth();
-        int positionX = (width*88)/100;
-        positionX = positionX - image_progress.getWidth()/4;
-        TranslateAnimation animation1 = new TranslateAnimation(image_progress.getX(),positionX,image_progress.getY(),image_progress.getY());
-        animation1.setFillAfter(true); // 애니메이션 후 이동한좌표에
-        //animation1.setInterpolator(new AccelerateInterpolator());
-        animation1.setDuration(990); //지속시간
-
-        image_progress.startAnimation(animation1);
-
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         goal = sharedPref.getString("edit_preference", "empty");
-        setCalendar();
+
+        setActionBar();
+        //setCalendar();
         settingCalendar();
         settingProgressView();
 
-
-        Log.e("Goal", "" + sharedPref.getString("edit_preference", "empty"));
-
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
+    }
+
+    public void setActionBar()
+    {
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
     }
 
     public void settingProgressView() {
@@ -133,7 +130,7 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
             }
         });
     }
-
+/*
     public void setCalendar() {
         // update title
         txtDate.setText("" + (today.get(Calendar.MONTH) + 1) + "월 " + today.get(Calendar.DATE)+"일");
@@ -148,7 +145,7 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
             }
         });
     }
-
+*/
     @Override
     public void onResume() {
         super.onResume();
@@ -175,6 +172,7 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
             animation.setInterpolator(new AccelerateInterpolator());
 
 
+            if(goal_percent > 100 ) goal_percent=100;
             percent.setText(""+goal_percent+"%");
             int width = mProgress.getWidth();
             int positionX = (width*goal_percent)/100;
@@ -233,8 +231,7 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
         //if()
 
         circleProgressView.setValueAnimated(MyApplication.mInstance.getTotal_kwh() / 6);
-        //circleProgressView.setRim
-        circleProgressView.setBarColor(Color.WHITE, Color.BLUE);
+        circleProgressView.setBarColor(Color.rgb(235,251,255), Color.rgb(0,150,250));
 
         setGoalText(total_money);
     }

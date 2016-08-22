@@ -240,9 +240,11 @@ public class CalendarView extends LinearLayout {
             {
                 // if it is today, set it to blue/bold
                 ((TextView)view.findViewById(R.id.calendar_day_text)).setTypeface(null, Typeface.BOLD);
-                ((TextView)view.findViewById(R.id.calendar_day_text)).setBackgroundResource(R.drawable.bulb02);
+                ((ImageView)view.findViewById(R.id.bulb_image)).setImageResource(R.drawable.bulb);
             }
 
+            ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(Color.WHITE);
+            /*
             if(position == 0)
             {
                 ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(getResources().getColor(R.color.sunday));
@@ -251,7 +253,7 @@ public class CalendarView extends LinearLayout {
             {
                 ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(getResources().getColor(R.color.saturday));
             }
-
+*/
             // set text
             ((TextView)view.findViewById(R.id.calendar_day_text)).setText(String.valueOf(date.getDate()));
 
