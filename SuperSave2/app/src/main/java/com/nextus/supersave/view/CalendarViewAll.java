@@ -68,6 +68,8 @@ public class CalendarViewAll extends LinearLayout {
     public CustomSQLiteHelper helper;
 
     public CalendarViewAll calendarViewAll;
+    public CalendarAdapter gridAdapter;
+    public  ArrayList<Float> temp_list;
 
     public CalendarViewAll(Context context)
     {
@@ -193,7 +195,7 @@ public class CalendarViewAll extends LinearLayout {
         final int date = ((Date) parent.getItemAtPosition(position)).getDate();
 
         helper  = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
-        final ArrayList<Float> temp_list = helper.findData(month, date);
+        temp_list = helper.findData(month, date);
 
         mAdapter = new ListViewAdapter(getContext());
 
@@ -229,7 +231,6 @@ public class CalendarViewAll extends LinearLayout {
             String temp = ""+month+"월 "+date+"일 "+temp_list.get(i)+"kWh 를 입력하였습니다.";
             mAdapter.addItem(temp);
         }
-
         listView.setAdapter(mAdapter);
     }
 
@@ -237,14 +238,17 @@ public class CalendarViewAll extends LinearLayout {
     {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
 
+
                 alertDialog.setTitle(dialog+ " "+kwh+"kWH 데이터를 삭제하겠습니까?")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
                         helper.delete(month, date, kwh);
+                        temp_list = helper.findData(month, date);
                         updateList(month, date);
-                        //mAdapter.notifyDataSetChanged();
+                        gridAdapter.setListData(helper.getData());
+                        gridAdapter.notifyDataSetChanged();
 
                     }
                 })
@@ -284,6 +288,8 @@ public class CalendarViewAll extends LinearLayout {
                         //helper.drop();
                         helper.insert(insert_query);
                         showSavedData(view, position);
+                        gridAdapter.setListData(helper.getData());
+                        gridAdapter.notifyDataSetChanged();
 
                         //Log.d("data_print", ""+helper.printData());
 
@@ -336,7 +342,13 @@ public class CalendarViewAll extends LinearLayout {
         }
 
         // update grid
-        grid.setAdapter(new CalendarAdapter(getContext(), cells, events));
+
+        gridAdapter = new CalendarAdapter((getContext()), cells, events);
+        //helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
+        //ArrayList<ListStructure> list = helper.getData();
+        helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
+        gridAdapter.setListData(helper.getData());
+        grid.setAdapter(gridAdapter);
 
         // set header color according to current season
         int month = currentDate.get(Calendar.MONTH);
@@ -349,6 +361,7 @@ public class CalendarViewAll extends LinearLayout {
     {
         // days with events
         private HashSet<Date> eventDays;
+        ArrayList<ListStructure> list;
 
         // for view inflation
         private LayoutInflater inflater;
@@ -358,6 +371,11 @@ public class CalendarViewAll extends LinearLayout {
             super(context, R.layout.control_calendar_day, days);
             this.eventDays = eventDays;
             inflater = LayoutInflater.from(context);
+        }
+
+        public void setListData(ArrayList<ListStructure> list)
+        {
+            this.list = list;
         }
 
         @Override
@@ -422,17 +440,26 @@ public class CalendarViewAll extends LinearLayout {
                 ((TextView)view.findViewById(R.id.calendar_day_text)).setTextColor(getResources().getColor(R.color.saturday));
             }
 
-            helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
-            ArrayList<ListStructure> list = helper.getData();
+            //helper = new CustomSQLiteHelper( getContext(), "ELECTRO_DATA.db", null, 1);
+            //ArrayList<ListStructure> list = helper.getData();
 
-            for(int i=0; i<list.size(); i++)
+            if(list.size() > 0)
             {
-                if( month == list.get(i).getMonth()-1 && day == list.get(i).getDate() )
+                for(int i=0; i<list.size(); i++)
                 {
-                    ImageView imageView = (ImageView) view.findViewById(R.id.calendar_day_icon);
-                    imageView.setImageResource(R.drawable.ic_favorites);
+                    if( month == list.get(i).getMonth()-1 && day == list.get(i).getDate() )
+                    {
+                        ImageView imageView = (ImageView) view.findViewById(R.id.calendar_day_icon);
+                        imageView.setImageResource(R.drawable.ic_favorites);
+                    }
                 }
             }
+            else
+            {
+                ImageView imageView = (ImageView) view.findViewById(R.id.calendar_day_icon);
+                imageView.setImageResource(0);
+            }
+
 
 
 

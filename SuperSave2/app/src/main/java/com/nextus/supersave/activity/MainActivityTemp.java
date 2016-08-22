@@ -5,22 +5,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.percent.PercentFrameLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -61,6 +68,8 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
     @DeclareView(id = R.id.adView)AdView adView;
     @DeclareView(id = R.id.progress)ProgressBar mProgress;
     @DeclareView(id = R.id.circleView)at.grabner.circleprogress.CircleProgressView circleProgressView;
+    @DeclareView(id = R.id.progress_image) PercentFrameLayout image_progress;
+    @DeclareView(id = R.id.percent)TextView percent;
 
     Calendar today = Calendar.getInstance();
 
@@ -74,13 +83,23 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_temp, true);
+
+        int width = mProgress.getWidth();
+        int positionX = (width*88)/100;
+        positionX = positionX - image_progress.getWidth()/4;
+        TranslateAnimation animation1 = new TranslateAnimation(image_progress.getX(),positionX,image_progress.getY(),image_progress.getY());
+        animation1.setFillAfter(true); // 애니메이션 후 이동한좌표에
+        //animation1.setInterpolator(new AccelerateInterpolator());
+        animation1.setDuration(990); //지속시간
+
+        image_progress.startAnimation(animation1);
+
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-
         goal = sharedPref.getString("edit_preference", "empty");
-
         setCalendar();
         settingCalendar();
         settingProgressView();
+
 
         Log.e("Goal", "" + sharedPref.getString("edit_preference", "empty"));
 
@@ -154,7 +173,22 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
             animation = ObjectAnimator.ofInt(mProgress, "progress", 0, goal_percent);
             animation.setDuration(990);
             animation.setInterpolator(new AccelerateInterpolator());
+
+
+            percent.setText(""+goal_percent+"%");
+            int width = mProgress.getWidth();
+            int positionX = (width*goal_percent)/100;
+            positionX = positionX - image_progress.getWidth()/4;
+
+            TranslateAnimation animation1 = new TranslateAnimation(image_progress.getX(),positionX,image_progress.getY(),image_progress.getY());
+            animation1.setFillAfter(true); // 애니메이션 후 이동한좌표에
+            animation1.setInterpolator(new AccelerateInterpolator());
+            animation1.setDuration(990); //지속시간
+
+            image_progress.startAnimation(animation1);
             animation.start();
+
+
 
             Log.e("Goal_Percent", "총액 : " + money + " // 목표금액 : " + goal_money + " // 퍼센트 : " + goal_percent);
         }
@@ -169,7 +203,13 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
         Date today = new Date();
         int month = today.getMonth() + 1;
 
-        ArrayList<Float> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
+        //ArrayList<Float> monthly_sum = MyApplication.mInstance.getHelper().monthly_data(month);
+
+        ArrayList<Float> monthly_sum = MyApplication.mInstance.getHelper().detail_data(month, today.getDate());
+
+        // 만약 오늘이 검침일 전이라면 -> 저번달 15 ~ 이번달 15  데이터 가져오고
+        // 만약 오늘이 검침일 이후라면 -> 이번달 15 ~ 다음달 15 데이터
+
         if (monthly_sum.size() > 0) {
             float first_data = monthly_sum.get(0);
             float last_data = monthly_sum.get(monthly_sum.size() - 1);
@@ -179,6 +219,7 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
             MyApplication.mInstance.setTotal_kwh(0);
 
         Calculator.getInstance().setData(MyApplication.mInstance.getTotal_kwh(), getApplicationContext());
+
         int total_money = Calculator.getInstance().getTotal_money();
         current_money.setText("" + total_money + " 원");
 
@@ -192,6 +233,8 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
         //if()
 
         circleProgressView.setValueAnimated(MyApplication.mInstance.getTotal_kwh() / 6);
+        //circleProgressView.setRim
+        circleProgressView.setBarColor(Color.WHITE, Color.BLUE);
 
         setGoalText(total_money);
     }

@@ -65,8 +65,6 @@ public class CalendarFragment extends Fragment {
 
        // CalendarView calendarView = (CalendarView) view.findViewById(R.id.calendar_view);
 
-
-
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
 

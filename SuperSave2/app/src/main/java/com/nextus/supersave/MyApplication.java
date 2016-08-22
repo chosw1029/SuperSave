@@ -1,6 +1,8 @@
 package com.nextus.supersave;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.nextus.supersave.db.CustomSQLiteHelper;
 
@@ -12,12 +14,14 @@ public class MyApplication extends Application {
     public static MyApplication mInstance;
     private static CustomSQLiteHelper helper;
     public float total_kwh = 0;
+    public SharedPreferences preferences;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mInstance = this;
         helper = new CustomSQLiteHelper( this, "ELECTRO_DATA.db", null, 1);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
     }
 

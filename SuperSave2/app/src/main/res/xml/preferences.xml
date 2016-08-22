@@ -27,6 +27,14 @@
                 />
 
             <EditTextPreference
+                android:key="resetDate"
+                android:digits="0123456789."
+                android:inputType="numberDecimal"
+                android:title="지침일 설정"
+                android:summary="숫자만 입력"
+                />
+
+            <EditTextPreference
                 android:key="edit_preference"
                 android:digits="0123456789."
                 android:inputType="numberDecimal"

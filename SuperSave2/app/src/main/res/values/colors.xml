@@ -10,4 +10,6 @@
     <color name="saturday">#0000ff</color>
     <color name="today">#ff3366</color>
     <color name="greyed_out">#c7c7c7</color>
+    <color name="mainColor">#FFF100</color>
+    <color name="subColor">#0096FA</color>
 </resources>

@@ -22,10 +22,12 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         ListPreference listPreference = (ListPreference) findPreference("list_preference");
         ListPreference listPreference02 = (ListPreference) findPreference("list_preference_02");
         EditTextPreference editTextPreference = (EditTextPreference) findPreference("edit_preference");
+        EditTextPreference editTextPreference2 = (EditTextPreference) findPreference("resetDate");
 
         listPreference.setOnPreferenceChangeListener(this);
         listPreference02.setOnPreferenceChangeListener(this);
         editTextPreference.setOnPreferenceChangeListener(this);
+        editTextPreference2.setOnPreferenceChangeListener(this);
 
         if(listPreference.getValue()!= null)
             listPreference.setSummary(listPreference.getValue());
@@ -33,6 +35,8 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
             listPreference02.setSummary(listPreference02.getValue());
         if(editTextPreference.getText()!= null)
             editTextPreference.setSummary(editTextPreference.getText());
+        if(editTextPreference2.getText()!= null)
+            editTextPreference2.setSummary(editTextPreference2.getText());
 
         /*
         listPreference.setSummary(listPreference.getValue());

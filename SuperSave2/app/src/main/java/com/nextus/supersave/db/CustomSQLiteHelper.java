@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.nextus.supersave.ListStructure;
+import com.nextus.supersave.MyApplication;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,6 @@ public class CustomSQLiteHelper extends SQLiteOpenHelper {
 
             list.add(temp);
         }
-
         db.close();
         return list;
     }
@@ -95,6 +95,89 @@ public class CustomSQLiteHelper extends SQLiteOpenHelper {
         }
 
         db.close();
+        return list;
+    }
+
+    public ArrayList<Float> detail_data(int month, int date) {
+        SQLiteDatabase db = getReadableDatabase();
+        String str = "";
+        ArrayList<Float> list = new ArrayList<>();
+        int resetDate = Integer.parseInt(MyApplication.mInstance.preferences.getString("resetDate", "15"));
+
+        if(date <= resetDate)  // 검침일 이전
+        {
+            int before_month = month-1;
+            //이전달 데이터 가져오기
+            Cursor cursor = db.rawQuery("select * from kwhdata where month="+before_month+" and date >="+resetDate, null); // 이번달 데이터 취합
+            while(cursor.moveToNext()) {
+                list.add(cursor.getFloat(3));
+
+                str += cursor.getFloat(0)
+                        + " : id / "
+                        + cursor.getFloat(1)
+                        + " : month / "
+                        + cursor.getFloat(2)
+                        + " : date "
+                        + cursor.getFloat(3)
+                        + " : kwh "
+                        + "\n";
+            }
+
+            //이번달 데이터 가져오기
+            cursor = db.rawQuery("select * from kwhdata where month="+month+" and date <="+resetDate, null); // 이번달 데이터 취합
+            while(cursor.moveToNext()) {
+                list.add(cursor.getFloat(3));
+
+                str += cursor.getFloat(0)
+                        + " : id / "
+                        + cursor.getFloat(1)
+                        + " : month / "
+                        + cursor.getFloat(2)
+                        + " : date "
+                        + cursor.getFloat(3)
+                        + " : kwh "
+                        + "\n";
+            }
+        }
+        else  // 검침일 이후
+        {
+            //이번달 데이터 가져오기
+            Cursor cursor = db.rawQuery("select * from kwhdata where month="+month+" and date >="+resetDate, null); // 이번달 데이터 취합
+            while(cursor.moveToNext()) {
+                list.add(cursor.getFloat(3));
+
+                str += cursor.getFloat(0)
+                        + " : id / "
+                        + cursor.getFloat(1)
+                        + " : month / "
+                        + cursor.getFloat(2)
+                        + " : date "
+                        + cursor.getFloat(3)
+                        + " : kwh "
+                        + "\n";
+            }
+
+            //다음달 데이터 가져오기
+            int after_month = month+1;
+            cursor = db.rawQuery("select * from kwhdata where month="+after_month+" and date <="+resetDate, null); // 이번달 데이터 취합
+            while(cursor.moveToNext()) {
+                list.add(cursor.getFloat(3));
+
+                str += cursor.getFloat(0)
+                        + " : id / "
+                        + cursor.getFloat(1)
+                        + " : month / "
+                        + cursor.getFloat(2)
+                        + " : date "
+                        + cursor.getFloat(3)
+                        + " : kwh "
+                        + "\n";
+            }
+
+
+
+        }
+
         return list;
     }
 
