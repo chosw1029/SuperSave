@@ -38,25 +38,6 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         if(editTextPreference2.getText()!= null)
             editTextPreference2.setSummary(editTextPreference2.getText());
 
-        /*
-        listPreference.setSummary(listPreference.getValue());
-        listPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preference.setSummary((String)newValue);
-                return true;
-            }
-        });
-
-        listPreference02.setSummary(listPreference02.getValue());
-        listPreference02.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                preference.setSummary((String)newValue);
-                return true;
-            }
-        });
-        */
     }
 
     @Override

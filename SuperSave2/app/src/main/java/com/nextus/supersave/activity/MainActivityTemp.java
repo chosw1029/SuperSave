@@ -63,14 +63,12 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
     @DeclareView(id = R.id.current_money)TextView current_money;
     @DeclareView(id = R.id.total_kwh)TextView total_kwh;
     @DeclareView(id = R.id.floating, click = "this")FloatingActionButton floatingactionButton;
-    //@DeclareView(id = R.id.calendar_date_display)TextView txtDate;
+    @DeclareView(id = R.id.expect)TextView expect;
     @DeclareView(id = R.id.goal)TextView goal_text;
     //@DeclareView(id = R.id.calendar_prev_button)ImageView calendar;
     @DeclareView(id = R.id.adView)AdView adView;
     @DeclareView(id = R.id.progress)ProgressBar mProgress;
     @DeclareView(id = R.id.circleView)at.grabner.circleprogress.CircleProgressView circleProgressView;
-    @DeclareView(id = R.id.progress_image) PercentFrameLayout image_progress;
-    @DeclareView(id = R.id.percent)TextView percent;
 
     Calendar today = Calendar.getInstance();
 
@@ -85,7 +83,13 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_temp, true);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        goal = sharedPref.getString("edit_preference", "empty");
+        goal = sharedPref.getString("list_preference", "empty");
+
+        if(goal.contentEquals("empty"))
+        {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+        }
 
         setActionBar();
         //setCalendar();
@@ -101,7 +105,23 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
         ActionBar actionBar = getSupportActionBar();
 
         actionBar.setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
+        actionBar.setTitle("");
+
+        View view = LayoutInflater.from(this).inflate(R.layout.actionbar_layout, null);
+        getSupportActionBar().setCustomView(view);
+
+        ((TextView)view.findViewById(R.id.calendar_date_display)).setText("" + (today.get(Calendar.MONTH) + 1) + "월 " + today.get(Calendar.DATE)+"일");
+
+        ImageView calendar = (ImageView)view.findViewById(R.id.calendar_input);
+
+        calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragment3).addToBackStack("calendar").commit();
+                Intent intent = new Intent(MainActivityTemp.this, CalendarSelectActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void settingProgressView() {
@@ -130,22 +150,8 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
             }
         });
     }
-/*
-    public void setCalendar() {
-        // update title
-        txtDate.setText("" + (today.get(Calendar.MONTH) + 1) + "월 " + today.get(Calendar.DATE)+"일");
-        //txtDate.setTextSize(2);
 
-        calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, fragment3).addToBackStack("calendar").commit();
-                Intent intent = new Intent(MainActivityTemp.this, CalendarSelectActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-*/
+
     @Override
     public void onResume() {
         super.onResume();
@@ -171,22 +177,7 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
             animation.setDuration(990);
             animation.setInterpolator(new AccelerateInterpolator());
 
-
-            if(goal_percent > 100 ) goal_percent=100;
-            percent.setText(""+goal_percent+"%");
-            int width = mProgress.getWidth();
-            int positionX = (width*goal_percent)/100;
-            positionX = positionX - image_progress.getWidth()/4;
-
-            TranslateAnimation animation1 = new TranslateAnimation(image_progress.getX(),positionX,image_progress.getY(),image_progress.getY());
-            animation1.setFillAfter(true); // 애니메이션 후 이동한좌표에
-            animation1.setInterpolator(new AccelerateInterpolator());
-            animation1.setDuration(990); //지속시간
-
-            image_progress.startAnimation(animation1);
             animation.start();
-
-
 
             Log.e("Goal_Percent", "총액 : " + money + " // 목표금액 : " + goal_money + " // 퍼센트 : " + goal_percent);
         }
@@ -228,12 +219,51 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
 
         total_kwh.setText(total + " kWH");
 
-        //if()
+        float total_expect_kwh = 0;
+        if(monthly_sum.size() > 1)
+        {
+            float average = monthly_sum.get(monthly_sum.size()-1) - monthly_sum.get(0);
+
+            average = average / monthly_sum.size();
+
+            int lastDay = 0;                                       //마지막 날짜 변수
+
+            Calendar cal = Calendar.getInstance();
+
+            cal.set(today.getYear(),month-1,1);                        //Calendar에서는 1월이 0이므로 우리가 사용하는 월에서 -1 해줘야 합니다.
+
+            lastDay = cal.getActualMaximum(Calendar.DATE);
+
+            int resetDate = Integer.parseInt(sharedPref.getString("resetDate", "0"));
+
+            // 만약 오늘이 검침일 이전일때와 이후일때
+            if( today.getDate() < resetDate ) // 이전
+            {
+                //int days = resetDate - today.getDate();
+                //days += resetDate;
+                total_expect_kwh = average * lastDay;
+                Log.e("EXPECT_MONEY",""+total_expect_kwh);
+                Calculator.getInstance().setExpectData(total_expect_kwh);
+            }
+            else  // 검침일 이후일때
+            {
+                //int days = lastDay - resetDate;
+                total_expect_kwh = average * lastDay;
+                Log.e("EXPECT_MONEY",""+total_expect_kwh);
+                Calculator.getInstance().setExpectData(total_expect_kwh);
+            }
+
+            expect.setText("이번달 예상 금액 : "+Calculator.getInstance().getExTotal_money()+"원");
+        }
+        else
+            expect.setText("이번달 예상 금액 : 데이터가 부족합니다.");
+
 
         circleProgressView.setValueAnimated(MyApplication.mInstance.getTotal_kwh() / 6);
+        //circleProgressView.setRimColor(getResources().getColor(R.color.mainColor));
         circleProgressView.setBarColor(Color.rgb(235,251,255), Color.rgb(0,150,250));
 
-        setGoalText(total_money);
+        setGoalText(Calculator.getInstance().getExTotal_money());
     }
 
     @Override
@@ -312,5 +342,25 @@ public class MainActivityTemp extends CycleControllerActivity implements View.On
 
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("종료하시겠습니까?")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //dis
+                    }
+                })
+                .create().show();
     }
 }

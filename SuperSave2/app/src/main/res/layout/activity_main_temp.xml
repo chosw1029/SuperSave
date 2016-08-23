@@ -68,11 +68,11 @@
                 android:layout_weight="0.8">
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/floating"
-                    android:src="@drawable/ic_flash"
+                    android:src="@drawable/tail"
                     android:scaleType="fitXY"
                     android:layout_marginRight="8dp"
                     android:background="#000000"
-                    android:layout_gravity="bottom|left"
+                    android:layout_gravity="bottom|right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     CircleProgressView:backgroundTint="@color/colorAccent" />
@@ -155,40 +155,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical" />
-                <android.support.percent.PercentFrameLayout
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <android.support.percent.PercentFrameLayout
-                        android:id="@+id/progress_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    <ImageView
-                        android:src="@drawable/progress"
-                        android:layout_marginBottom="8dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_width="112dp"
-                        android:layout_height="80dp" />
-                    <TextView
-                        android:id="@+id/percent"
-                        android:textColor="#000000"
-                        android:textStyle="bold"
-                        android:text="50%"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_width="112dp"
-                        android:layout_height="80dp" />
-                    </android.support.percent.PercentFrameLayout>
-                </android.support.percent.PercentFrameLayout>
-
-
-
                 <TextView
                     android:id="@+id/goal"
                     android:layout_gravity="right"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:textSize="13dp"
                     android:text="목표 금액"
+                    android:textColor="#ffffff"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/expect"
+                    android:layout_gravity="left|bottom"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="11dp"
+                    android:text="이번달 예상금액 : 50000원"
                     android:textColor="#ffffff"
                     android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"

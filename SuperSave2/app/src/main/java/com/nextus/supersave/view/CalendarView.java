@@ -82,7 +82,6 @@ public class CalendarView extends LinearLayout {
         loadDateFormat(attrs);
         assignUiElements();
         assignClickHandlers();
-
         updateCalendar();
     }
 
@@ -102,6 +101,7 @@ public class CalendarView extends LinearLayout {
             ta.recycle();
         }
     }
+
     private void assignUiElements()
     {
         // layout is inflated, assign local variables to components

@@ -4,11 +4,13 @@
     android:layout_height="60dp">
 
     <ImageView
+        android:id="@+id/calendar_input"
         android:src="@drawable/ic_event_note_black_24dp"
         android:layout_gravity="center_vertical"
         android:layout_width="32dp"
         android:layout_height="32dp" />
     <TextView
+        android:id="@+id/calendar_date_display"
         android:gravity="center_vertical"
         android:text="8월 22일"
         android:textSize="22dp"

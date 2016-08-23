@@ -6,11 +6,11 @@
         <PreferenceCategory
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:key="setting_1"
-            android:title="개인 정보 설정">
+            android:title="개인 정보 설정\n( 아래 해당사항을 입력해 주세요. *는 필수사항입니다.)">
 
             <ListPreference
                 android:key="list_preference"
-                android:title="주거 형태"
+                android:title="*주거 형태"
                 android:summary="본인이 거주하고 있는 주거 형태"
                 android:entries="@array/listDisplayWord"
                 android:entryValues="@array/listReturnValue"
@@ -19,7 +19,7 @@
 
             <ListPreference
                 android:key="list_preference_02"
-                android:title="용도 선택"
+                android:title="*용도 선택"
                 android:summary="저압용 또는 고압용"
                 android:entries="@array/list_function"
                 android:entryValues="@array/list_function"
@@ -30,8 +30,9 @@
                 android:key="resetDate"
                 android:digits="0123456789."
                 android:inputType="numberDecimal"
-                android:title="지침일 설정"
+                android:title="*지침일 설정"
                 android:summary="숫자만 입력"
+                android:defaultValue="15"
                 />
 
             <EditTextPreference
@@ -42,7 +43,5 @@
                 android:summary="숫자만 입력"
                 />
         </PreferenceCategory>
-
-
 
 </PreferenceScreen>
